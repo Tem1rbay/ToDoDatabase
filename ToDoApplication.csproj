@@ -1,0 +1,53 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>7eee9a25-d6ae-407e-ab41-9afa74a983e6</UserSecretsId>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'https' " />
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'http' " />
+  <ItemGroup>
+    <None Remove="Views\Task\" />
+    <None Remove="Models\ViewModels\" />
+    <None Remove="Models\ViewModels\Task\" />
+    <None Remove="Services\" />
+    <None Remove="Services\Interfaces\" />
+    <None Remove="Services\Implementations\" />
+    <None Remove="Domain\" />
+    <None Remove="Domain\Entity\" />
+    <None Remove="Domain\Enum\" />
+    <None Remove="Domain\Response\" />
+    <None Remove="DAL\" />
+    <None Remove="DAL\Repositories\" />
+    <None Remove="DAL\Interfaces\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\Task\" />
+    <Folder Include="Models\ViewModels\" />
+    <Folder Include="Models\ViewModels\Task\" />
+    <Folder Include="Services\" />
+    <Folder Include="Services\Interfaces\" />
+    <Folder Include="Services\Implementations\" />
+    <Folder Include="Domain\" />
+    <Folder Include="Domain\Entity\" />
+    <Folder Include="Domain\Enum\" />
+    <Folder Include="Domain\Response\" />
+    <Folder Include="DAL\" />
+    <Folder Include="DAL\Repositories\" />
+    <Folder Include="DAL\Interfaces\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.10" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.10">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="PowerDeploy.PackageManagerExtension" Version="0.6.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Razor.Runtime" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="7.0.10" />
+  </ItemGroup>
+</Project>
