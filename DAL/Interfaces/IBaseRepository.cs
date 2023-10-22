@@ -12,6 +12,8 @@ namespace ToDoApplication.DAL.Interfaces {
 		Task<T> Update(T entity);
 
 		Task Delete(T entity);
+
+		T GetItem(int id);
 	}
 }
 

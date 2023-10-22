@@ -14,10 +14,10 @@ namespace ToDoApplication.Models.ViewModels.Task {
 
 		public void Validate() {
 			if(string.IsNullOrEmpty(Name)) {
-				throw new ArgumentNullException("Нужно указать название задачи");
+				throw new ArgumentNullException(Name, "Нужно указать название задачи");
 			}
 			if(string.IsNullOrEmpty(Description)) {
-				throw new ArgumentNullException("Нужно указать описание задачи");
+				throw new ArgumentNullException(Description, "Нужно указать описание задачи");
 			}
 		}
 	}

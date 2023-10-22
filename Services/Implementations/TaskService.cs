@@ -37,9 +37,7 @@ namespace ToDoApplication.Services.Implementations {
                         StatusCode = StatusCode.TaskIsHasAlready,
                     };
                 }
-
-                var test = 0;
-
+                
                 task = new TaskEntity() {
                     Name = model.Name,
                     Description = model.Description,
@@ -60,6 +58,52 @@ namespace ToDoApplication.Services.Implementations {
             }
             catch(Exception ex) {
                 _logger.LogError($"[TaskService.Create]: {ex.Message}");
+                return new BaseResponse<TaskEntity>() {
+                    StatusCode = StatusCode.InternalServerError,
+                    Description = $"{ex.Message}"
+                };
+            }
+        }
+
+        public async Task<IBaseResponse<IEnumerable<ViewTaskViewModel>>> GetAllTasks() {
+            try {
+                var tasks = _taskRepository.GetAll()
+                    .Select(x => new ViewTaskViewModel() {
+                        Id = x.Id,
+                        Name = x.Name,
+                        Priority = x.Priority,
+                        Description = x.Description,
+                        Status = x.Status,
+                        CreatedDateTime = DateTime.Now
+                    });
+
+                _logger.LogInformation($"[TaskService.GetAllTasks]: Succeed in receiving all tasks");
+                return new BaseResponse<IEnumerable<ViewTaskViewModel>>() {
+                    Data = tasks,
+                    StatusCode = StatusCode.OkResult,
+                    Description = "Список задач"
+                };
+            } catch(Exception ex) {
+                _logger.LogError($"[TaskService.GetTasks]: {ex.Message}");
+                return new BaseResponse<IEnumerable<ViewTaskViewModel>>() {
+                    StatusCode = StatusCode.InternalServerError,
+                    Description = $"{ex.Message}"
+                };
+            }
+        }
+
+        public async Task<IBaseResponse<TaskEntity>> GetTaskResponse(int taskId) {
+            try {
+                var task = _taskRepository.GetItem(taskId);
+
+                _logger.LogInformation($"[TaskService.GetTaskResponse]: Succeed in receiving task with Id {taskId}");
+                return new BaseResponse<TaskEntity>() {
+                    Data = task,
+                    StatusCode = StatusCode.OkResult,
+                    Description = "Субъект задачи"
+                };
+            } catch(Exception ex) {
+                _logger.LogError($"Fail to receive task with Id: {taskId}");
                 return new BaseResponse<TaskEntity>() {
                     StatusCode = StatusCode.InternalServerError,
                     Description = $"{ex.Message}"

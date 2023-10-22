@@ -1,0 +1,46 @@
+﻿@model IEnumerable<ToDoApplication.Models.ViewModels.Task.ViewTaskViewModel>
+@{
+    ViewData["title"] = "Table Page";
+}
+
+<table class="table table-hover" id="taskTableId">
+    <thead>
+        <tr>
+            @{
+                <th>Действия</th>
+                <th>@Html.DisplayNameFor(model => model.Id)</th>
+                <th>@Html.DisplayNameFor(model => model.Name)</th>
+                <th>@Html.DisplayNameFor(model => model.Priority)</th>
+                <th>@Html.DisplayNameFor(model => model.Description)</th>
+                <th>@Html.DisplayNameFor(model => model.Status)</th>
+                <th>@Html.DisplayNameFor(model => model.CreatedDateTime)</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+            @{
+                foreach (var item in Model) {
+                    <tr>
+                        <td><a asp-controller="Task" asp-action="TaskView" asp-route-taskId="@item.Id">Открыть</a></td>
+                        <td>@item.Id</td>
+                        <td>@item.Name</td>
+                        <td>@item.Priority</td>
+                        <td>@item.Description</td>
+                        <td>@item.Status</td>
+                        <td>@item.CreatedDateTime.ToShortDateString()</td>
+                    </tr>
+                }
+            }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script src="//cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script>
+
+        let dataTable = $('#taskTableId').DataTable({
+            searching: false,
+            paging: false
+        })
+    </script>
+}

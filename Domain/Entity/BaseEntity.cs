@@ -3,7 +3,7 @@ namespace ToDoApplication.Models.Entity {
 
 	public class BaseEntity : IEntity {
 
-		public Guid Id { get; set; }
+		public int Id { get; set; }
 
 		public bool IsActive { get; set; } = true;
 
