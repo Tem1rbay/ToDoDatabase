@@ -36,12 +36,14 @@
                         text: response.description,
                         icon: 'success',
                         confirmButtonText: 'Окей'
-                    })
+
+                    });
+                    window.location.href = "@Url.Action("TaskView", "Task")" + String("/"+response.id);
                 },
                 error: function (response) {
                      Swal.fire({
                         title: 'Информация',
-                        text: response.description,
+                        text: response.responseJSON.description,
                         icon: 'error',
                         confirmButtonText: 'Окей'
                      })
