@@ -10,8 +10,8 @@ namespace ToDoApplication.Services.Interfaces {
 		Task<IBaseResponse<TaskEntity>> Create(CreateTaskViewModel model);
 
 		Task<IBaseResponse<IEnumerable<ViewTaskViewModel>>> GetAllTasks();
-
-		Task<IBaseResponse<TaskEntity>> GetTaskResponse(int taskId);
+		Task<IBaseResponse<TaskEntity>> GetExecuteTaskResponse(int taskId);
+        Task<IBaseResponse<TaskEntity>> GetTaskResponse(int taskId);
 	}
 }
 

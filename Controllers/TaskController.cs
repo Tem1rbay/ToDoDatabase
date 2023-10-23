@@ -51,5 +51,17 @@ public class TaskController : Controller {
             return BadRequest(new {description = response.Description });
         }
     }
+
+    [HttpPut]
+    [Route("[controller]/[action]/{taskId:int}")]
+    public async Task<IActionResult> ExecuteTask(int taskId) {
+        var response = await _taskService.GetExecuteTaskResponse(taskId);
+
+        if(response.StatusCode == Domain.Enum.StatusCode.OkResult) {
+            return View("TaskView", response.Data);
+        } else {
+            return BadRequest(new {description = response.Description});
+        }
+    }
 }
 

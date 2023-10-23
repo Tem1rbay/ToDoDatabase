@@ -110,6 +110,29 @@ namespace ToDoApplication.Services.Implementations {
                 };
             }
         }
+
+        public async Task<IBaseResponse<TaskEntity>> GetExecuteTaskResponse(int taskId) {
+            try {
+                var task = _taskRepository.GetItem(taskId);
+                task.Status = Models.Enum.TaskStatus.Done;
+
+                await _taskRepository.Update(task);
+
+                _logger.LogInformation($"Task executed {task.Name} ({task.Id})");
+
+                return new BaseResponse<TaskEntity>() {
+                    StatusCode = StatusCode.OkResult,
+                    Description = "Задача успешно выполнена",
+                    Data = task
+                };
+            } catch(Exception ex) {
+                _logger.LogError($"[TaskService.ExecuteTask]: {ex.Message}");
+                return new BaseResponse<TaskEntity>() {
+                    StatusCode = StatusCode.InternalServerError,
+                    Description = $"{ex.Message}"
+                };
+            }
+        }
     }
 }
 
