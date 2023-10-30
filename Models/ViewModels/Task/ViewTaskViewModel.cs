@@ -24,6 +24,7 @@ namespace ToDoApplication.Models.ViewModels.Task {
 		[Display(Name = "Дата создания")]
 		public DateTime CreatedDateTime { get; set; }
 
+		public bool IsReadonly { get; set; }
     }
 }
 

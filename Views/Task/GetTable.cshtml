@@ -19,7 +19,7 @@
             @{
                 foreach (var item in Model) {
                     <tr>
-                        <td><a asp-controller="Task" asp-action="TaskView" asp-route-taskId="@item.Id">Открыть</a></td>
+                        <td><a asp-controller="Task" asp-action="TaskView" asp-route-taskId="@item.Id" asp-route-isEditting="@false">Открыть</a></td>
                         <td>@item.Name</td>
                         <td>@item.Priority</td>
                         <td>@item.Status</td>

@@ -133,6 +133,33 @@ namespace ToDoApplication.Services.Implementations {
                 };
             }
         }
+
+        public async Task<IBaseResponse<TaskEntity>> GetEditTaskResponse(EditTaskViewModel model) {
+            try {
+                model.Validate();
+
+                var task = _taskRepository.GetItem(model.Id);
+                task.Name = model.Name;
+                task.Description = model.Description;
+                task.Priority = model.TaskPriority;
+
+                await _taskRepository.Update(task);
+
+                _logger.LogInformation(String.Format("Task edited {0} ({1})", task.Name, task.Id));
+
+                return new BaseResponse<TaskEntity>() {
+                    StatusCode = StatusCode.OkResult,
+                    Description = "Задача успешно редактировалось",
+                    Data = task
+                };
+            } catch(Exception ex) {
+                _logger.LogError($"[TaskService.EditTask]: {ex.Message}");
+                return new BaseResponse<TaskEntity>() {
+                    StatusCode = StatusCode.InternalServerError,
+                    Description = $"{ex.Message}"
+                };
+            }
+        }
     }
 }
 

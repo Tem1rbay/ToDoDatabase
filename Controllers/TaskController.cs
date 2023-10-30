@@ -41,12 +41,22 @@ public class TaskController : Controller {
     }
 
     [HttpGet]
-    [Route("[controller]/[action]/{taskId:int}")]
-    public async Task<IActionResult> TaskView(int taskId) {
+    [Route("[controller]/[action]/{taskId:int}/{isEditting:bool}")]
+    public async Task<IActionResult> TaskView(int taskId, bool isEditting) {
         var response = await _taskService.GetTaskResponse(taskId);
-        
+        var data = response.Data;
+
+        var model = new ViewTaskViewModel() {
+            Name = data.Name,
+            Priority = data.Priority,
+            Description = data.Description,
+            Status = data.Status,
+            Id = data.Id,
+        };
+
         if(response.StatusCode == Domain.Enum.StatusCode.OkResult) {
-            return View(response.Data);
+            ViewBag.IsEditting = isEditting;
+            return View(model);
         } else {
             return BadRequest(new {description = response.Description });
         }
@@ -61,6 +71,28 @@ public class TaskController : Controller {
             return View("TaskView", response.Data);
         } else {
             return BadRequest(new {description = response.Description});
+        }
+    }
+
+    [HttpPut]
+    [Route("[controller]/[action]/{taskId:int}")]
+    public async Task<IActionResult> EditTask(int taskId) {
+        var taskResponse = await _taskService.GetTaskResponse(taskId);
+        var data = taskResponse.Data;
+
+        var model = new EditTaskViewModel() {
+            Id = taskId,
+            Name = data.Name,
+            Description = data.Description,
+            TaskPriority = data.Priority
+        };
+        var response = await _taskService.GetEditTaskResponse(model);
+
+        if(response.StatusCode == Domain.Enum.StatusCode.OkResult) {
+            ViewBag.IsEditted = false;
+            return View("TaskView", response.Data);
+        } else {
+            return BadRequest(new { decription = response.Description });
         }
     }
 }
